@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="SenSante API",
@@ -9,6 +10,15 @@ app = FastAPI(
     version="0.2.0"
 )
 
+
+# Autoriser les requetes depuis le frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # En dev : tout accepter
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --- Schemas Pydantic ---
 class PatientInput(BaseModel):
